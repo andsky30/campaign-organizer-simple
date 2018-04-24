@@ -1,0 +1,21 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Home page
+GET     /                           controllers.CampaignController.getAllCampaigns()
+
++nocsrf
+POST    /                           controllers.CampaignController.createCampaign()
+
+GET     /:id                        controllers.CampaignController.getOneCampaign(id: String)
+
++nocsrf
+DELETE     /:id                     controllers.CampaignController.deleteCampaign(id: String)
+
++nocsrf
+PUT    /                            controllers.CampaignController.updateCampaign()
+
+
+
+
