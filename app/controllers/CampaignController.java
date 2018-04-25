@@ -8,11 +8,12 @@ import play.mvc.Result;
 import service.CampaignService;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 import static play.libs.Json.toJson;
-
+@Singleton
 public class CampaignController extends Controller {
 
     private final CampaignService campaignService;
@@ -41,7 +42,7 @@ public class CampaignController extends Controller {
 
     public Result deleteCampaign(String id) {
         campaignService.delete(id);
-        return ok("Campaign with Id: " + id + " has been deleted successfully!");
+        return ok(toJson("Campaign with Id: " + id + " has been deleted successfully!"));
     }
 
     public Result updateCampaign() {

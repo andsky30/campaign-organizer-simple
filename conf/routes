@@ -3,18 +3,18 @@
 # ~~~~
 
 # Home page
-GET     /                           controllers.CampaignController.getAllCampaigns()
+GET     /api/campaigns                          controllers.CampaignController.getAllCampaigns()
 
 +nocsrf
-POST    /                           controllers.CampaignController.createCampaign()
+POST    /api/campaigns                          controllers.CampaignController.createCampaign()
 
-GET     /:id                        controllers.CampaignController.getOneCampaign(id: String)
-
-+nocsrf
-DELETE     /:id                     controllers.CampaignController.deleteCampaign(id: String)
+GET     /api/campaigns/:id                      controllers.CampaignController.getOneCampaign(id: String)
 
 +nocsrf
-PUT    /                            controllers.CampaignController.updateCampaign()
+DELETE  /api/campaigns/:id                      controllers.CampaignController.deleteCampaign(id: String)
+
++nocsrf
+PUT     /api/campaigns                          controllers.CampaignController.updateCampaign()
 
 
 

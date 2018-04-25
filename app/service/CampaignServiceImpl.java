@@ -5,10 +5,11 @@ import model.Campaign;
 import repository.CampaignRepository;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-
+@Singleton
 public class CampaignServiceImpl implements CampaignService {
 
     private final CampaignRepository campaignRepository;
@@ -66,8 +67,14 @@ public class CampaignServiceImpl implements CampaignService {
     }
 
     private Campaign updateCampaignData(Campaign campaignToUpdate, CampaignResource campaignResource) {
-        campaignToUpdate.setName(campaignResource.getName());
-        campaignToUpdate.setTown(campaignResource.getTown());
+        Campaign newCampaign = campaignResourceMapper.mapToCampaign(campaignResource);
+        campaignToUpdate.setName(newCampaign.getName());
+        campaignToUpdate.setKeywords(newCampaign.getKeywords());
+        campaignToUpdate.setBidAmount(newCampaign.getBidAmount());
+        campaignToUpdate.setFund(newCampaign.getFund());
+        campaignToUpdate.setStatus(newCampaign.getStatus());
+        campaignToUpdate.setTown(newCampaign.getTown());
+        campaignToUpdate.setRadius(newCampaign.getRadius());
         return campaignToUpdate;
     }
 }
