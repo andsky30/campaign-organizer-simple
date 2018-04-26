@@ -3,6 +3,7 @@ package service;
 import dto.CampaignResource;
 import model.Campaign;
 import model.CampaignStatus;
+import service.exceptions.InvalidStatusException;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
@@ -25,7 +26,7 @@ public class CampaignResourceMapper {
                 campaign.getKeywords(),
                 convertBigDecimalToString(campaign.getBidAmount()),
                 convertBigDecimalToString(campaign.getFund()),
-                convertCampaignStatusToStrin(campaign.getStatus()),
+                convertCampaignStatusToString(campaign.getStatus()),
                 campaign.getTown(),
                 convertBigDecimalToString(campaign.getRadius()));
     }
@@ -44,14 +45,14 @@ public class CampaignResourceMapper {
             return CampaignStatus.ON;
         } else if (status.equals("off")) {
             return CampaignStatus.OFF;
-        } else throw new RuntimeException("Invalid status!");
+        } else throw new InvalidStatusException();
     }
 
-    private String convertCampaignStatusToStrin(CampaignStatus status) {
+    private String convertCampaignStatusToString(CampaignStatus status){
         if (status.equals(CampaignStatus.ON)) {
             return "on";
         } else if (status.equals(CampaignStatus.OFF)) {
             return "off";
-        } else throw new RuntimeException("Invalid status!");
+        } else throw new InvalidStatusException();
     }
 }

@@ -2,25 +2,30 @@ package controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import dto.CampaignResource;
+import play.data.Form;
+import play.data.FormFactory;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 import service.CampaignService;
+import service.exceptions.CampaignNotFoundException;
+import service.exceptions.InvalidStatusException;
 
 import javax.inject.Inject;
-import javax.inject.Singleton;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 import static play.libs.Json.toJson;
-@Singleton
+
 public class CampaignController extends Controller {
 
+    private final FormFactory formFactory;
     private final CampaignService campaignService;
 
     @Inject
-    public CampaignController(CampaignService campaignService) {
+    public CampaignController(CampaignService campaignService, FormFactory formFactory) {
         this.campaignService = campaignService;
+        this.formFactory = formFactory;
     }
 
     public Result getAllCampaigns() {
@@ -34,21 +39,55 @@ public class CampaignController extends Controller {
     }
 
     public Result createCampaign() {
-        JsonNode json = request().body().asJson();
-        CampaignResource campaignResource = Json.fromJson(json, CampaignResource.class);
-        CampaignResource saved = campaignService.create(campaignResource);
-        return created(toJson(saved));
+        Form<CampaignResource> formFromRequest = getFormFromRequest();
+        if (formFromRequest.hasErrors()) {
+            return badRequest(formFromRequest.errorsAsJson());
+        } else {
+            try {
+                CampaignResource campaignResource = getCampaignResourceFromRequest();
+                CampaignResource saved = campaignService.create(campaignResource);
+                return created(toJson(saved));
+            } catch (InvalidStatusException ex) {
+                return badRequest(toJson(ex.getMessage()));
+            } catch (CampaignNotFoundException ex) {
+                return notFound(toJson(ex.getMessage()));
+            }
+        }
     }
 
     public Result deleteCampaign(String id) {
-        campaignService.delete(id);
-        return ok(toJson("Campaign with Id: " + id + " has been deleted successfully!"));
+        try {
+            campaignService.delete(id);
+            return ok(toJson("Campaign with Id: " + id + " has been deleted successfully!"));
+        } catch (CampaignNotFoundException ex) {
+            return notFound(toJson(ex.getMessage()));
+        }
     }
 
     public Result updateCampaign() {
-        JsonNode json = request().body().asJson();
-        CampaignResource campaignResource = Json.fromJson(json, CampaignResource.class);
-        CampaignResource updated = campaignService.update(campaignResource);
-        return ok(toJson(updated));
+        Form<CampaignResource> formFromRequest = getFormFromRequest();
+        if (formFromRequest.hasErrors()) {
+            return badRequest(formFromRequest.errorsAsJson());
+        } else {
+            try {
+                CampaignResource campaignResource = getCampaignResourceFromRequest();
+                CampaignResource updated = campaignService.update(campaignResource);
+                return ok(toJson(updated));
+            } catch (InvalidStatusException ex) {
+                return badRequest(toJson(ex.getMessage()));
+            } catch (CampaignNotFoundException ex) {
+                return notFound(toJson(ex.getMessage()));
+            }
+        }
     }
+
+    private Form<CampaignResource> getFormFromRequest() {
+        return formFactory.form(CampaignResource.class).bindFromRequest();
+    }
+
+    private CampaignResource getCampaignResourceFromRequest() {
+        JsonNode json = request().body().asJson();
+        return Json.fromJson(json, CampaignResource.class);
+    }
+
 }
