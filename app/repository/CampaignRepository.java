@@ -1,8 +1,8 @@
 package repository;
 
 import com.google.inject.ImplementedBy;
-import com.sun.glass.ui.View;
 import model.Campaign;
+import model.EmeraldAccount;
 
 import java.util.List;
 
@@ -22,4 +22,8 @@ public interface CampaignRepository {
     String [] getKeywords();
 
     String [] getTowns();
+
+    EmeraldAccount saveAccount(EmeraldAccount emeraldAccount);
+
+    EmeraldAccount getAccount();
 }

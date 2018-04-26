@@ -20,5 +20,9 @@ GET     /api/campaign_keywords                  controllers.CampaignController.g
 
 GET     /api/campaign_towns                     controllers.CampaignController.getTowns()
 
+GET     /api/account_balance                     controllers.CampaignController.getAccountBalance()
+
+
+
 
 

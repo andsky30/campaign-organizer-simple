@@ -1,13 +1,13 @@
 package repository;
 
 import model.Campaign;
+import model.EmeraldAccount;
 import play.db.jpa.JPAApi;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class JPACampaignRepository implements CampaignRepository {
@@ -76,5 +76,21 @@ public class JPACampaignRepository implements CampaignRepository {
         //little bit hardcoded for exercise purposes
         String [] townsArr = {"Krakow", "Rzeszow", "Wroclaw", "Katowice", "Radom", "Kalisz", "Gdansk"};
         return townsArr;
+    }
+
+    @Override
+    public EmeraldAccount saveAccount(EmeraldAccount emeraldAccount) {
+        return jpaApi.withTransaction(() -> {
+            EntityManager em = jpaApi.em();
+            return em.merge(emeraldAccount);
+        });
+    }
+
+    @Override
+    public EmeraldAccount getAccount() {
+        return jpaApi.withTransaction(() -> {
+            EntityManager em = jpaApi.em();
+            return em.find(EmeraldAccount.class, EmeraldAccount.EMERALD_ACCOUNT_ID);
+        });
     }
 }

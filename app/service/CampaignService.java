@@ -21,4 +21,6 @@ public interface CampaignService {
     String [] getKeywords();
 
     String [] getTowns();
+
+    String getAccountBalance();
 }

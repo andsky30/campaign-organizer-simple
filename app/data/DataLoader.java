@@ -2,6 +2,7 @@ package data;
 
 import model.Campaign;
 import model.CampaignStatus;
+import model.EmeraldAccount;
 import play.inject.ApplicationLifecycle;
 import repository.CampaignRepository;
 
@@ -16,10 +17,13 @@ import java.util.concurrent.CompletableFuture;
 public class DataLoader {
 
     private final CampaignRepository campaignRepository;
+    private final EmeraldAccount emeraldAccount;
 
     @Inject
-    public DataLoader(ApplicationLifecycle applicationLifecycle, CampaignRepository campaignRepository) {
+    public DataLoader(ApplicationLifecycle applicationLifecycle, CampaignRepository campaignRepository,
+                      EmeraldAccount emeraldAccount) {
         this.campaignRepository = campaignRepository;
+        this.emeraldAccount = emeraldAccount;
 
         applicationLifecycle.addStopHook(() -> {
             sayGoodbye();
@@ -27,6 +31,10 @@ public class DataLoader {
         });
 
         loadInitialData();
+
+        emeraldAccount.setBalance(new BigDecimal(150000));
+        campaignRepository.saveAccount(emeraldAccount);
+
     }
 
     private void loadInitialData() {
