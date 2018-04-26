@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class JPACampaignRepository implements CampaignRepository {
@@ -60,5 +61,20 @@ public class JPACampaignRepository implements CampaignRepository {
             EntityManager em = jpaApi.em();
             return em.merge(campaign);
         });
+    }
+
+    @Override
+    public String [] getKeywords() {
+        //little bit hardcoded for exercise purposes
+        String[] keywordsArr = {"campaign", "quality", "product", "price",
+                "clients", "time", "media", "ad", "logo"};
+        return keywordsArr;
+    }
+
+    @Override
+    public String[] getTowns() {
+        //little bit hardcoded for exercise purposes
+        String [] townsArr = {"Krakow", "Rzeszow", "Wroclaw", "Katowice", "Radom", "Kalisz", "Gdansk"};
+        return townsArr;
     }
 }

@@ -16,6 +16,9 @@ DELETE  /api/campaigns/:id                      controllers.CampaignController.d
 +nocsrf
 PUT     /api/campaigns                          controllers.CampaignController.updateCampaign()
 
+GET     /api/campaign_keywords                  controllers.CampaignController.getKeywords()
+
+GET     /api/campaign_towns                     controllers.CampaignController.getTowns()
 
 
 

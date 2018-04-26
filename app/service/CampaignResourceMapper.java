@@ -37,7 +37,7 @@ public class CampaignResourceMapper {
         df.setMaximumFractionDigits(2);
         df.setMinimumFractionDigits(0);
         df.setGroupingUsed(false);
-        return df.format(bd);
+        return df.format(bd).replace(',','.');
     }
 
     private CampaignStatus resolveCampaignStatus(String status) {

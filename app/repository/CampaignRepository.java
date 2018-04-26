@@ -18,4 +18,8 @@ public interface CampaignRepository {
     void delete(Campaign campaign);
 
     Campaign update(Campaign campaign);
+
+    String [] getKeywords();
+
+    String [] getTowns();
 }

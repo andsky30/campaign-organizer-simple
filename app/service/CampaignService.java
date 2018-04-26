@@ -17,4 +17,8 @@ public interface CampaignService {
     void delete(String id);
 
     CampaignResource update(CampaignResource campaignResource);
+
+    String [] getKeywords();
+
+    String [] getTowns();
 }

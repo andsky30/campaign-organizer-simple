@@ -1,7 +1,9 @@
 package controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import dto.CampaignResource;
+import play.api.libs.json.JsObject;
 import play.data.Form;
 import play.data.FormFactory;
 import play.libs.Json;
@@ -13,6 +15,8 @@ import service.exceptions.InvalidStatusException;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
 import java.util.stream.Collectors;
 
 import static play.libs.Json.toJson;
@@ -88,6 +92,16 @@ public class CampaignController extends Controller {
     private CampaignResource getCampaignResourceFromRequest() {
         JsonNode json = request().body().asJson();
         return Json.fromJson(json, CampaignResource.class);
+    }
+
+    public Result getKeywords() {
+        String[] keywords = campaignService.getKeywords();
+        return ok(toJson(keywords));
+    }
+
+    public Result getTowns() {
+        String[] towns = campaignService.getTowns();
+        return ok(toJson(towns));
     }
 
 }

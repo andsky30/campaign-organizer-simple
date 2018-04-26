@@ -10,6 +10,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 import javax.validation.Valid;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -79,5 +80,15 @@ public class CampaignServiceImpl implements CampaignService {
         campaignToUpdate.setTown(newCampaign.getTown());
         campaignToUpdate.setRadius(newCampaign.getRadius());
         return campaignToUpdate;
+    }
+
+    @Override
+    public String [] getKeywords() {
+        return campaignRepository.getKeywords();
+    }
+
+    @Override
+    public String [] getTowns() {
+        return campaignRepository.getTowns();
     }
 }
