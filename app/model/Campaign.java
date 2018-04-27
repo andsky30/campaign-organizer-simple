@@ -20,7 +20,6 @@ public class Campaign  {
     private String town;
     private BigDecimal radius;
 
-
     public Campaign(String name, List<String> keywords, BigDecimal bidAmount,
                     BigDecimal fund, CampaignStatus status, String town, BigDecimal radius) {
         this.name = name;

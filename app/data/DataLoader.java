@@ -29,31 +29,35 @@ public class DataLoader {
             sayGoodbye();
             return CompletableFuture.completedFuture(null);
         });
-
         loadInitialData();
-
-        emeraldAccount.setBalance(new BigDecimal(150000));
-        campaignRepository.saveAccount(emeraldAccount);
-
     }
 
     private void loadInitialData() {
+        emeraldAccount.setBalance(new BigDecimal(150000));
+        campaignRepository.saveAccount(emeraldAccount);
+
         String[] keywords = campaignRepository.getKeywords();
         String[] keywords1 = {keywords[1], keywords[3], keywords[8]};
-        Campaign campaign1 = new Campaign(
-                "name",
-                new ArrayList<>(Arrays.asList(keywords1)),
-                new BigDecimal(123.45),
-                new BigDecimal(123.45),
-                CampaignStatus.OFF,
-                "Rzeszow",
-                new BigDecimal(345)
-        );
+        String[] keywords2 = {keywords[2], keywords[5], keywords[7]};
+        Campaign campaign1 = createCampaign("Initial campaign", keywords1, 150);
+        Campaign campaign2 = createCampaign("Product campaign", keywords2, 2000);
         campaignRepository.add(campaign1);
+        campaignRepository.add(campaign2);
     }
 
-    public void sayGoodbye() {
+    private Campaign createCampaign(String name, String[] keywords1, int num) {
+        return new Campaign(
+                name,
+                new ArrayList<>(Arrays.asList(keywords1)),
+                new BigDecimal(num +50),
+                new BigDecimal(num * 5),
+                CampaignStatus.OFF,
+                "Krakow",
+                new BigDecimal(num)
+        );
+    }
+
+    private void sayGoodbye() {
         System.out.println("Goodbye");
     }
-
 }

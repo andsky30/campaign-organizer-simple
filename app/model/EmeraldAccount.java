@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 @Entity
 public class EmeraldAccount {
 
-    public static final Long EMERALD_ACCOUNT_ID  = 1l;
+    public static final Long EMERALD_ACCOUNT_ID  = 1L;
 
     @Id
     private Long id = EMERALD_ACCOUNT_ID;
