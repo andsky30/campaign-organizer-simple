@@ -93,4 +93,12 @@ public class JPACampaignRepository implements CampaignRepository {
             return em.find(EmeraldAccount.class, EmeraldAccount.EMERALD_ACCOUNT_ID);
         });
     }
+
+    @Override
+    public void deleteAll() {
+        jpaApi.withTransaction(() -> {
+            EntityManager em = jpaApi.em();
+            em.createQuery("DELETE FROM Campaign").executeUpdate();
+        });
+    }
 }

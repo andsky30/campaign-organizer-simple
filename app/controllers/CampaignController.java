@@ -35,7 +35,11 @@ public class CampaignController extends Controller {
     }
 
     public Result getOneCampaign(String id) {
-        return ok(toJson(campaignService.getOne(id)));
+        try {
+            return ok(toJson(campaignService.getOne(id)));
+        } catch (CampaignNotFoundException ex) {
+            return notFound(toJson(ex.getMessage()));
+        }
     }
 
     public Result createCampaign() {

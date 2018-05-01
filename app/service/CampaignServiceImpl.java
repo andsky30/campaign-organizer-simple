@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 
 public class CampaignServiceImpl implements CampaignService {
 
-    private final CampaignRepository campaignRepository;
+    private CampaignRepository campaignRepository;
     private final CampaignResourceMapper campaignResourceMapper;
     private final EmeraldAccount emeraldAccount;
 

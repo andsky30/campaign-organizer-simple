@@ -26,4 +26,6 @@ public interface CampaignRepository {
     EmeraldAccount saveAccount(EmeraldAccount emeraldAccount);
 
     EmeraldAccount getAccount();
+
+    void deleteAll();
 }
